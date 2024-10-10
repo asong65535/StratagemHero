@@ -5,10 +5,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.hrk.stratagemhero.utils.*
 
 @Composable
 fun GameScreen() {
@@ -27,11 +30,23 @@ fun GameScreen() {
             println("Incorrect arrow pressed: $pressedArrow")
         }
     }
+
+    var numberCorrectArrows: Int by remember { mutableStateOf(0) }
+
+    var isPerfect: Boolean by remember { mutableStateOf(false)}
+
+    var timeLeft: Int by remember { mutableStateOf(0) }
+
+    var userRound: Int by remember { mutableStateOf(1)}
+
+    var userScore: Int by remember { mutableStateOf(calculateScore(numberCorrectArrows, timeLeft, userRound - 1, isPerfect)) }
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        UserStats(1, 1)
+        UserStats(userRound, userScore)
         MainStratagem()
         Spacer(
             modifier = Modifier.height(8.dp)
